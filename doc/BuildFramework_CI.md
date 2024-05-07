@@ -11,6 +11,6 @@ Többszöri próbálkozás és rengeteg Gradle dokumentáció olvasás után arr
 > [!TIP]
 > A projekt megnyitása után a a Main.java függvényt elindítva azonnal megkezdődik a szükséges fájlok letöltése, majd buildelése.
 
-> [IMPORTANT]
+> [!IMPORTANT]
 > JAVA SDK: 17, 
 > Gradle version: 8.7
