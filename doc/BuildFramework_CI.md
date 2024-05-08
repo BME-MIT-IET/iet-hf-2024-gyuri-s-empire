@@ -17,3 +17,9 @@ Többszöri próbálkozás és rengeteg Gradle dokumentáció olvasás után arr
 
 ## Issue #2 - CI környezet beüzemelése - GitHub Actions
 A Gradle beüzemelése után úgy döntöttünk, hogy a CI környezetet GitHub Actions segítségével valósítjuk meg. Elsősorban azért döntöttünk mellette, mert a GitHub Actions a GitHub részeként könnyen elérhető és beüzemelhető, illetve a népszerű fejlesztőkörnyezetekhez letölthető plugin-ként vagy extension-ként.
+
+> [!NOTE]
+> Gradle keretrendszerhez nem használtam még CI környezetet, de néhány próba és egy kevés dokumentáció segítségével sikerült megvalósítani.
+
+> [!IMPORTANT]
+> Environment: Windows (windows-latest)
