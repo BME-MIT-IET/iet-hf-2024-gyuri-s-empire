@@ -2,13 +2,13 @@ name: Java CI
 
 on:
   push:
-    branches: 
+    branches:
       - main
       - 'CI-environment-setup'
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -20,4 +20,4 @@ jobs:
         java-version: '17'
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: gradlew.bat build
