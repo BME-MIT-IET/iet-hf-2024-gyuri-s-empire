@@ -2,9 +2,6 @@ name: Java CI
 
 on:
   push:
-    branches:
-      - main
-      - 'CI-environment-setup'
 
 jobs:
   build:
