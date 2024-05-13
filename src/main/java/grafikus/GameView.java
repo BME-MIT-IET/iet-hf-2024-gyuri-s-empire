@@ -10,32 +10,36 @@ import java.util.HashMap;
 import javax.swing.*;
 
 public class GameView {
+    public static final String STEPS_LEFT = " steps left";
+    public static final String S_TURN = "'s turn";
+    public static final String ERROR = "Error";
+    public static final String NEM_CSOVON_ALL = "Nem csovon all";
     /**
      * A fő panel, amelyen minden játékhoz szükséges dolog megjelenik.
      */
     private JPanel gamepanel;
-
+    
     /**
      * A játékosok által végrehajtható műveleteket reprezentáló gombok listája.
      */
     private ArrayList<JButton> actions = new ArrayList<>();
-
+    
     /**
      * A játék állapotáról információt szolgáltató JLabel-ek listája.
      */
     private ArrayList<JLabel> informations = new ArrayList<>();
-
+    
     /**
      * A játék során megjelenítendő Drawable (pályaelemek és játékosok) objektumok
      * listája.
      */
     private static ArrayList<Drawable> drawables = new ArrayList<>();
-
+    
     /**
      * Az actions lista gombjaihoz függvényeket rendelő HashMap.
      */
     private HashMap<String, Runnable> gombfuggvenyek = new HashMap<>();
-
+    
     /**
      * Gombok szövegét tároló tömb (actions).
      */
@@ -43,63 +47,63 @@ public class GameView {
             "Make pipe sticky"/* eddig general 0-3 */, "Make pipe slippery"/* Saboteur 4 */,
             "Repair pump", "Repair pipe", "Attach pipe", "Detach pipe", "Place pump",
             "Request pump", "Request pipe" /* plumber 5-11 */ };
-
+    
     /**
      * JLabel-ek default szövegét tároló tömb (informations).
      */
     private String[] labeltext = new String[] { "", "[timeleft]", "X steps left", "Saboteurwater: 0",
             "Cisternwater: 0" };
-
+    
     /**
      * A játékteret reprezentáló JPanel. Ezen jelennek meg a pályaelemek és a
      * játékosok ikonjai.
      */
     private JPanel playgroundpanel;
-
+    
     /**
      * Ennyi játékos van csapatonként, alapértelmezett értéke 2.
      */
     private static int playercount = 2;
-
+    
     /**
      * Az éppen soron következő játékost reprezentáló objektum.
      */
     private static Character character;
-
+    
     /**
      * Az éppen soronkövetkező játékos által még végrehajtható lépések száma.
      * Kezdőértéke 6.
      */
     private int stepsLeft = 6;
-
+    
     /**
      * A játékban lévő játékosokat tároló lista.
      */
     ArrayList<Character> players = new ArrayList<>();
-
+    
     /**
      * Az éppen soronkövetkező játékos indexe a listában, alapértelmezetten az első
      * játékos kezd.
      */
     private int playerIdex = 0;
-
+    
     /**
      * Setter, beállítja a playercount értékét.
-     * 
+     *
      * @param value Az options menüben megadott játékosszám csapatonként.
      */
-    public void setPlayerCount(int value) {
+    public static void setPlayerCount(int value) {
         playercount = value;
     }
-
+    
     /**
      * Konstruktor. Meghívja a gombokat példányosító függvényt és hozzájuk rendeli a
      * metódusokat.
      */
     public GameView() {
-
+        
         GameSetup();
-
+        
         gombfuggvenyek.put("Move", this::move);
         gombfuggvenyek.put("Set pump", this::setpump);
         gombfuggvenyek.put("Puncture pipe", this::puncturepipe);
@@ -112,15 +116,15 @@ public class GameView {
         gombfuggvenyek.put("Place pump", this::placepump);
         gombfuggvenyek.put("Request pump", this::requestpump);
         gombfuggvenyek.put("Request pipe", this::requestpipe);
-
+        
     }
-
+    
     /**
      * Példányosítja a játék vezérléséhez szükséges vezérlőket.
      */
     public void GameSetup() {
         gamepanel = new JPanel(null);
-
+        
         for (int i = 0; i < buttontext.length; i++) {
             JButton JB = new JButton(buttontext[i]);
             JB.setLocation(10, i * 50 + 60);
@@ -130,7 +134,7 @@ public class GameView {
             actions.add(i, JB);
             gamepanel.add(JB);
         }
-
+        
         JLabel muveletek = new JLabel("Available actions:");
         muveletek.setLocation(10, 10);
         muveletek.setSize(150, 40);
@@ -145,23 +149,23 @@ public class GameView {
             informations.add(JL);
             gamepanel.add(JL);
         }
-
+        
         gamepanel.setVisible(true);
     }
-
+    
     /**
      * Inicializálja a játékteret és kirajzolja a pályát és a játékokat reprezentáló
      * grafikus objektumokat.
      */
     public void PlaygroundSetup() {
-
+        
         playgroundpanel = new JPanel(null);
         playgroundpanel.setLocation(190, 20);
         playgroundpanel.setSize(790, 720);
         playgroundpanel.setBackground(Color.getHSBColor(230, 200, 150));
         gamepanel.add(playgroundpanel);
         playgroundpanel.setVisible(true);
-
+        
         // Pálya Létrehozása
         Pump pump0 = new Pump();
         Pump pump1 = new Pump();
@@ -170,20 +174,20 @@ public class GameView {
         Pump pump4 = new Pump();
         Pump pump5 = new Pump();
         Pump pump6 = new Pump();
-
+        
         Source source0 = new Source(pump0);
         Source source1 = new Source(pump1);
-
+        
         Cistern cistern0 = new Cistern(pump5);
         Cistern cistern1 = new Cistern(pump6);
-
+        
         // objektumok grafikus cucchoz rendelese
         SourceGraph sourceGraph0 = new SourceGraph(playgroundpanel, 40, 180, source0);
         SourceGraph sourceGraph1 = new SourceGraph(playgroundpanel, 40, 460, source1);
-
+        
         CisternGraph cisternGraph0 = new CisternGraph(playgroundpanel, 700, 180, cistern0);
         CisternGraph cisternGraph1 = new CisternGraph(playgroundpanel, 700, 460, cistern1);
-
+        
         PumpGraph pumpGraph0 = new PumpGraph(playgroundpanel, 187, 200, pump0);
         PumpGraph pumpGraph1 = new PumpGraph(playgroundpanel, 187, 440, pump1);
         PumpGraph pumpGraph2 = new PumpGraph(playgroundpanel, 354, 140, pump2);
@@ -191,10 +195,10 @@ public class GameView {
         PumpGraph pumpGraph4 = new PumpGraph(playgroundpanel, 354, 500, pump4);
         PumpGraph pumpGraph5 = new PumpGraph(playgroundpanel, 521, 200, pump5);
         PumpGraph pumpGraph6 = new PumpGraph(playgroundpanel, 521, 440, pump6);
-
+        
         Network.Init(playercount);
         players = Network.GetCharacters();
-
+        
         try {
             for (int i = 0; i < (players.size()); i++) {
                 int[] c = pumpGraph0.getCoord();
@@ -211,16 +215,16 @@ public class GameView {
         } catch (Exception ex) {
             System.out.println("rossz cast");
         }
-
+        
         character = players.get(playerIdex);
-
+        
         /// forrasok
         drawables.add(sourceGraph0);
         drawables.add(sourceGraph1);
         /// ciszternak
         drawables.add(cisternGraph0);
         drawables.add(cisternGraph1);
-
+        
         // pumpák
         drawables.add(pumpGraph0);
         drawables.add(pumpGraph1);
@@ -229,56 +233,56 @@ public class GameView {
         drawables.add(pumpGraph4);
         drawables.add(pumpGraph5);
         drawables.add(pumpGraph6);
-
-        drawables.add(new PipeGraph(playgroundpanel, sourceGraph0.GetX(), sourceGraph0.GetY(), pumpGraph0.GetX(),
-                pumpGraph0.GetY(), (Pipe) Network.getPiece("pipe0")));
-        drawables.add(new PipeGraph(playgroundpanel, sourceGraph1.GetX(), sourceGraph1.GetY(), pumpGraph1.GetX(),
-                pumpGraph1.GetY(), (Pipe) Network.getPiece("pipe1")));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph5.GetX(), pumpGraph5.GetY(), cisternGraph0.GetX(),
-                cisternGraph0.GetY(), (Pipe) Network.getPiece("pipe2")));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph6.GetX(), pumpGraph6.GetY(), cisternGraph1.GetX(),
-                cisternGraph1.GetY(), (Pipe) Network.getPiece("pipe3")));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph0.GetX(), pumpGraph0.GetY(), pumpGraph2.GetX(),
-                pumpGraph2.GetY(), new Pipe(pump0, pump2)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph2.GetX(), pumpGraph2.GetY(), pumpGraph5.GetX(),
-                pumpGraph5.GetY(), new Pipe(pump2, pump5)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph0.GetX(), pumpGraph0.GetY(), pumpGraph3.GetX(),
-                pumpGraph3.GetY(), new Pipe(pump0, pump3)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph3.GetX(), pumpGraph3.GetY(), pumpGraph5.GetX(),
-                pumpGraph5.GetY(), new Pipe(pump3, pump5)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph1.GetX(), pumpGraph1.GetY(), pumpGraph3.GetX(),
-                pumpGraph3.GetY(), new Pipe(pump1, pump3)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph3.GetX(), pumpGraph3.GetY(), pumpGraph6.GetX(),
-                pumpGraph6.GetY(), new Pipe(pump3, pump6)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph1.GetX(), pumpGraph1.GetY(), pumpGraph4.GetX(),
-                pumpGraph4.GetY(), new Pipe(pump1, pump4)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph4.GetX(), pumpGraph4.GetY(), pumpGraph6.GetX(),
-                pumpGraph6.GetY(), new Pipe(pump4, pump6)));
-
-        informations.get(3).setText(String.valueOf(stepsLeft) + " steps left");
-        informations.get(2).setText(String.valueOf(modell.Game.GetTimeleft()) + " steps till the end");
-        informations.get(1).setText(character.getId() + "'s turn");
+        
+        drawables.add(new PipeGraph(playgroundpanel, sourceGraph0.getx(), sourceGraph0.gety(), pumpGraph0.getx(),
+                pumpGraph0.gety(), (Pipe) Network.getPiece("pipe0")));
+        drawables.add(new PipeGraph(playgroundpanel, sourceGraph1.getx(), sourceGraph1.gety(), pumpGraph1.getx(),
+                pumpGraph1.gety(), (Pipe) Network.getPiece("pipe1")));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph5.getx(), pumpGraph5.gety(), cisternGraph0.getx(),
+                cisternGraph0.gety(), (Pipe) Network.getPiece("pipe2")));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph6.getx(), pumpGraph6.gety(), cisternGraph1.getx(),
+                cisternGraph1.gety(), (Pipe) Network.getPiece("pipe3")));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph0.getx(), pumpGraph0.gety(), pumpGraph2.getx(),
+                pumpGraph2.gety(), new Pipe(pump0, pump2)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph2.getx(), pumpGraph2.gety(), pumpGraph5.getx(),
+                pumpGraph5.gety(), new Pipe(pump2, pump5)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph0.getx(), pumpGraph0.gety(), pumpGraph3.getx(),
+                pumpGraph3.gety(), new Pipe(pump0, pump3)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph3.getx(), pumpGraph3.gety(), pumpGraph5.getx(),
+                pumpGraph5.gety(), new Pipe(pump3, pump5)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph1.getx(), pumpGraph1.gety(), pumpGraph3.getx(),
+                pumpGraph3.gety(), new Pipe(pump1, pump3)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph3.getx(), pumpGraph3.gety(), pumpGraph6.getx(),
+                pumpGraph6.gety(), new Pipe(pump3, pump6)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph1.getx(), pumpGraph1.gety(), pumpGraph4.getx(),
+                pumpGraph4.gety(), new Pipe(pump1, pump4)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph4.getx(), pumpGraph4.gety(), pumpGraph6.getx(),
+                pumpGraph6.gety(), new Pipe(pump4, pump6)));
+        
+        informations.get(3).setText(stepsLeft + STEPS_LEFT);
+        informations.get(2).setText(Game.GetTimeleft() + " steps till the end");
+        informations.get(1).setText(character.getId() + S_TURN);
         Update();
-
+        
     }
-
+    
     /**
      * A gombok eseménykezelője, meghívja a megnyomott gombnak megfelelő metódust.
-     * 
+     *
      * @param jb Az eseményt kiváltó gomb.
      */
     public void ButtonPressed(JButton jb) {
-        informations.get(1).setText(character.getId() + "'s turn");
+        informations.get(1).setText(character.getId() + S_TURN);
         gombfuggvenyek.get(jb.getText()).run();
     }
-
+    
     /**
      * Frissíti a játékról a JLabel-ekben megjelenő információkat.
      */
     public void FreshTime() {
-
+        
         informations.get(2).setText(String.valueOf(modell.Game.GetTimeleft()) + " steps till the end");
-        informations.get(3).setText(String.valueOf(stepsLeft - 1) + " steps left");
+        informations.get(3).setText(String.valueOf(stepsLeft - 1) + STEPS_LEFT);
         informations.get(4).setText("Saboteurwater: " + Network.GetSandWater());
         informations.get(5).setText("Cisternwater: " + Network.GetCityWater());
         stepsLeft = stepsLeft - 1;
@@ -291,49 +295,49 @@ public class GameView {
         }
         if (stepsLeft == 0) {
             stepsLeft = 6;
-
+            
             playerIdex = (playerIdex + 1) % players.size();
             character = players.get(playerIdex);
-
-            informations.get(3).setText(String.valueOf(stepsLeft) + " steps left");
-            informations.get(1).setText(character.getId() + "'s turn");
+            
+            informations.get(3).setText(String.valueOf(stepsLeft) + STEPS_LEFT);
+            informations.get(1).setText(character.getId() + S_TURN);
         }
         Update();
     }
-
+    
     /**
      * Frissíti a pálya kirajzolását a változásoknak megfelelően.
      */
     public void Update() {
-
+        
         playgroundpanel.removeAll();
-
+        
         if (informations.get(1).getText().contains("saboteur")) {
             actions.get(4).setVisible(true);
             for (int i = 5; i < actions.size(); i++) {
                 actions.get(i).setVisible(false);
             }
         }
-
+        
         else if (informations.get(1).getText().contains("plumber")) {
             actions.get(4).setVisible(false);
             for (int i = 5; i < actions.size(); i++) {
                 actions.get(i).setVisible(true);
             }
         }
-
+        
         modell.Timer.Tick();
-
+        
         for (Drawable drawable : drawables) {
             drawable.Draw();
         }
         playgroundpanel.repaint();
-
+        
     }
-
+    
     /**
      * Getter
-     * 
+     *
      * @param id A keresett Drawable objektum ID-ja.
      * @return Az ID-nak megfelelő objektum. Ha nincs ilyen akkor null.
      */
@@ -350,23 +354,23 @@ public class GameView {
         }
         return null;
     }
-
+    
     /**
      * Getter
-     * 
+     *
      * @return A fő JPanel.
      */
     public JPanel Getgamepanel() {
         return gamepanel;
     }
-
+    
     /**
      * Megkeresi az adott objektum koordinátáit és visszatér azokkal.
-     * 
+     *
      * @param current A keresett objektum.
      * @returnA keresett objektum koordinátái.
      */
-
+    
     public static int[] findGraphCoord(NetworkPiece current) {
         String currentId = current.getId();
         int[] coord = new int[2];
@@ -378,10 +382,10 @@ public class GameView {
         }
         return coord;
     }
-
+    
     /**
      * Setter, a paraméterben megadott karakter koordinátáit állítja be.
-     * 
+     *
      * @param c    Az adott karakter.
      * @param tomb A beállítani kívánt koordináták.
      */
@@ -402,29 +406,29 @@ public class GameView {
             }
         }
     }
-
+    
     /**
      * A játékosok mozgását megvalósító metódus.
      */
     private void move() {
-
+        
         if (character.getcanmove()) {
             JDialog jd = new JDialog();
             jd.setTitle("Choose field");
             jd.setModal(true);
             jd.setResizable(false);
-
+            
             JPanel jp = new JPanel(new GridLayout(2, 1));
-
+            
             ArrayList<NetworkPiece> szomszedok = character.GetCurrentPiece().GetNeighbours();
             String[] tomb = new String[szomszedok.size()];
             for (int i = 0; i < szomszedok.size(); i++) {
                 tomb[i] = szomszedok.get(i).getId();
             }
-
+            
             JComboBox<String> hova = new JComboBox<>(tomb);
             jp.add(hova);
-
+            
             JButton ok = new JButton("OK");
             ok.addActionListener(e -> {
                 character.Move(Network.getPiece((String) hova.getSelectedItem()));
@@ -435,30 +439,30 @@ public class GameView {
                 FreshTime();
                 jd.dispose();
             });
-
+            
             jp.add(ok);
             jd.add(jp);
             jd.pack();
-
+            
             jd.setLocationRelativeTo(null);
             jd.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Oda vagy ragadva mint a bélyeg!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Oda vagy ragadva mint a bélyeg!", ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Egy adott pumpa ki- és bemenetének átállítását megvalósító metódus.
      */
     private void setpump() {
         System.out.println("setpump");
-
+        
         if (character.GetCurrentPiece().getId().contains("pump")) {
             JDialog jd = new JDialog();
             jd.setTitle("choose flow direction");
             jd.setModal(true);
             jd.setResizable(false);
-
+            
             ArrayList<NetworkPiece> szomszedok = character.GetCurrentPiece().GetNeighbours();
             String[] tomb = new String[szomszedok.size()];
             for (int i = 0; i < szomszedok.size(); i++) {
@@ -466,10 +470,10 @@ public class GameView {
             }
             JComboBox<String> beBox = new JComboBox<>(tomb);
             JComboBox<String> kiBox = new JComboBox<>(tomb);
-
+            
             JButton okButton = new JButton("OK");
             JButton cancelButton = new JButton("Cancel");
-
+            
             okButton.addActionListener(e -> {
                 String bemenet = (String) beBox.getSelectedItem();
                 String kimenet = (String) kiBox.getSelectedItem();
@@ -477,19 +481,19 @@ public class GameView {
                     character.SetPump((Pipe) Network.getPiece(bemenet), (Pipe) Network.getPiece(kimenet));
                     FreshTime();
                 } catch (Exception ex) {
-
+                
                 }
                 jd.dispose();
             });
-
+            
             cancelButton.addActionListener(e -> {
                 jd.dispose();
             });
-
+            
             JPanel buttonPanel = new JPanel();
             buttonPanel.add(okButton);
             buttonPanel.add(cancelButton);
-
+            
             JPanel mainPanel = new JPanel(new GridLayout(3, 2));
             mainPanel.add(new JLabel("Bemeneti irány:"));
             mainPanel.add(beBox);
@@ -497,18 +501,18 @@ public class GameView {
             mainPanel.add(kiBox);
             mainPanel.add(new JLabel());
             mainPanel.add(buttonPanel);
-
+            
             jd.getContentPane().add(mainPanel);
             jd.pack();
             jd.setResizable(false);
             jd.setLocationRelativeTo(null);
             jd.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Nem pumpán áll a karakter", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nem pumpán áll a karakter", ERROR, JOptionPane.ERROR_MESSAGE);
         }
-
+        
     }
-
+    
     /**
      * Egy adott cső kilyukasztását megvalósító metódus.
      */
@@ -522,10 +526,10 @@ public class GameView {
                 System.out.println("nem hívható a lyukasztás");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem csovon all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, NEM_CSOVON_ALL, ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Egy adott cső csúszóssá tételét megvalósító metódus.
      */
@@ -539,10 +543,10 @@ public class GameView {
                 System.out.println("nem hívható a sikositas");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem csovon all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, NEM_CSOVON_ALL, ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Egy adott cső ragadóssá tételét megvalósító metódus.
      */
@@ -556,10 +560,10 @@ public class GameView {
                 System.out.println("nem hívható a ragacs");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem csovon all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, NEM_CSOVON_ALL, ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Egy adott pumpa megjavítását megvalósító metódus.
      */
@@ -573,10 +577,10 @@ public class GameView {
                 System.out.println("nem hívható a javitas");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem pumpan all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nem pumpan all", ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Egy adott cső megjavítását megvalósító metódus.
      */
@@ -590,10 +594,10 @@ public class GameView {
                 System.out.println("nem hívható a javitas");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem csovon all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, NEM_CSOVON_ALL, ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Egy adott cső pumpához való csatlakoztatását megvalósító metódus.
      */
@@ -607,10 +611,10 @@ public class GameView {
                     c.AttachPipe();
                     FreshTime();
                 }
-
+                
                 else {
                     JOptionPane.showMessageDialog(null,
-                            "Csőnek két vége nem lehet ugyanahhoz a pumpához csatlakoztatva!", "Error",
+                            "Csőnek két vége nem lehet ugyanahhoz a pumpához csatlakoztatva!", ERROR,
                             JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception ex) {
@@ -618,32 +622,32 @@ public class GameView {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Nem pumpán áll vagy túl sok cső van a pumpához csatlakoztatva!",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                    ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Egy adott cső pumpáról való lecsatlakoztatását megvalósító metódus.
      */
     private void detachpipe() {
         System.out.println("detachpipe");
-
+        
         if (character.GetCurrentPiece().getId().contains("pump")) {
             JDialog jd = new JDialog();
             jd.setTitle("Choose a pipe to detach");
             jd.setModal(true);
             jd.setResizable(false);
-
+            
             ArrayList<NetworkPiece> szomszedok = character.GetCurrentPiece().GetNeighbours();
             String[] tomb = new String[szomszedok.size()];
             for (int i = 0; i < szomszedok.size(); i++) {
                 tomb[i] = szomszedok.get(i).getId();
             }
             JComboBox<String> csoBox = new JComboBox<>(tomb);
-
+            
             JButton okButton = new JButton("OK");
             JButton cancelButton = new JButton("Cancel");
-
+            
             okButton.addActionListener(e -> {
                 try {
                     String cso = (String) csoBox.getSelectedItem();
@@ -652,39 +656,39 @@ public class GameView {
                         ((Plumber) character).DetachPipe(p);
                         FreshTime();
                     } else {
-                        JOptionPane.showMessageDialog(null, "A cső foglalt!", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "A cső foglalt!", ERROR, JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (Exception ex) {
-
+                
                 }
-
+                
                 jd.dispose();
             });
-
+            
             cancelButton.addActionListener(e -> {
                 jd.dispose();
             });
-
+            
             JPanel buttonPanel = new JPanel();
             buttonPanel.add(okButton);
             buttonPanel.add(cancelButton);
-
+            
             JPanel mainPanel = new JPanel(new GridLayout(3, 2));
             mainPanel.add(new JLabel("leválasztandó cső:"));
             mainPanel.add(csoBox);
             mainPanel.add(buttonPanel);
-
+            
             jd.getContentPane().add(mainPanel);
             jd.pack();
             jd.setResizable(false);
             jd.setLocationRelativeTo(null);
             jd.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Nem pumpan all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nem pumpan all", ERROR, JOptionPane.ERROR_MESSAGE);
         }
-
+        
     }
-
+    
     /**
      * Egy adott cső közepére pumpa lerakását megvalósító metódus.
      */
@@ -695,9 +699,9 @@ public class GameView {
                 String pipeId = character.GetCurrentPiece().getId();
                 Pump pump = (Pump) (((Plumber) character).GetCarries());
                 ((Plumber) character).PlacePump();
-
+                
                 int[] coord = new int[2];
-
+                
                 for (int i = 0; i < drawables.size(); i++) {
                     if (pipeId.equals(drawables.get(i).getModelId())) {
                         coord = drawables.get(i).getCoord();
@@ -716,16 +720,16 @@ public class GameView {
                     coord3 = findGraphCoord(pumps.get(1));
                     drawables.add(new PipeGraph(playgroundpanel, coord2[0], coord2[1], coord3[0], coord3[1], pi));
                 }
-
+                
                 FreshTime();
             } catch (Exception ex) {
                 System.out.println("nem hívható a pumpa elhelyezes");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem csovon all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, NEM_CSOVON_ALL, ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Egy ciszternától pumpa felvételét megvalósító metódus.
      */
@@ -735,10 +739,10 @@ public class GameView {
             ((Plumber) character).RequestPump();
             FreshTime();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Nem hívható a pumpa kérés!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nem hívható a pumpa kérés!", ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Egy ciszternától cső felvételét megvalósító metódus.
      */
@@ -748,7 +752,7 @@ public class GameView {
             ((Plumber) character).RequestPipe();
             FreshTime();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Nem hívható a cső kérés!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nem hívható a cső kérés!", ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 }

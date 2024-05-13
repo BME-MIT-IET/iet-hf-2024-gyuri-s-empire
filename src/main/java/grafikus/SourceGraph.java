@@ -26,24 +26,7 @@ public class SourceGraph implements Drawable {
      * A SourceGraph x koordinátája.
      */
     private int y;
-
-    /**
-     * Getter
-     * 
-     * @return A forrásra lépő karakter karakter leendő x koordinátáját adja meg.
-     */
-    public int GetX() {
-        return x + 30;
-    }
-
-    /**
-     * Getter
-     * 
-     * @return A forrásra lépő karakter karakter leendő y koordinátáját adja meg.
-     */
-    public int GetY() {
-        return y + 30;
-    }
+    
 
     private Random random = new Random();
 
