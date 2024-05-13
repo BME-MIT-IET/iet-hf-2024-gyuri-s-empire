@@ -19,6 +19,8 @@ public class CisternGraph implements Drawable {
      * A játékteret megjelenítő panel.
      */
     private JPanel playgroundpanel;
+    
+    private Random random = new Random();
 
     /**
      * A CisternGraph x koordinátája.
@@ -100,10 +102,9 @@ public class CisternGraph implements Drawable {
      * @return A generált koordináták tömbje.
      */
     public int[] getCoord() {
-        Random r = new Random();
         int[] m = new int[2];
-        m[0] = x + r.nextInt(30);
-        m[1] = y + r.nextInt(30);
+        m[0] = x + random.nextInt(30);
+        m[1] = y + random.nextInt(30);
         return m;
     }
 
