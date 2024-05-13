@@ -30,6 +30,8 @@ public class PumpGraph implements Drawable {
      */
     private boolean works;
 
+    private Random random = new Random();
+
     /**
      * Getter
      * 
@@ -106,10 +108,9 @@ public class PumpGraph implements Drawable {
      * @return A generált koordináták tömbje.
      */
     public int[] getCoord() {
-        Random r = new Random();
         int[] m = new int[2];
-        m[0] = x + r.nextInt(30);
-        m[1] = y + r.nextInt(30);
+        m[0] = x + random.nextInt(30);
+        m[1] = y + random.nextInt(30);
         return m;
     }
 

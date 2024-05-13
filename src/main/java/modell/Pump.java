@@ -10,6 +10,7 @@ public class Pump extends NetworkPiece implements Steppable {
 	private boolean waterflow;
 	private static int counter = 0;
 	private ArrayList<Pipe> pipes = new ArrayList<>();
+	private Random random = new Random();
 
 	/**
 	 * Konstruktor.
@@ -100,8 +101,7 @@ public class Pump extends NetworkPiece implements Steppable {
 	 */
 	public void Step() {
 
-		Random r = new Random();
-		if (r.nextInt() % 7 == 0) {
+		if (random.nextInt() % 7 == 0) {
 			// works = false;
 		}
 

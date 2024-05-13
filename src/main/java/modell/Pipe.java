@@ -10,6 +10,7 @@ public class Pipe extends NetworkPiece implements Steppable {
 	private boolean issticky;
 	private static int counter = 0;
 	private ArrayList<NetworkPiece> neighbours = new ArrayList<>();
+	private Random random = new Random();
 
 	/**
 	 * Konstruktor.
@@ -154,6 +155,7 @@ public class Pipe extends NetworkPiece implements Steppable {
 	}
 
 	public void swap(Pipe uj, Pipe regi) {
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -186,16 +188,15 @@ public class Pipe extends NetworkPiece implements Steppable {
 	 */
 	public void Step() {
 
-		Random r = new Random();
-		if (r.nextInt() % 3 == 0) {
+		if (random.nextInt() % 3 == 0) {
 			isslippery = false;
 		}
-		if (r.nextInt() % 3 == 0) {
+		if (random.nextInt() % 3 == 0) {
 			issticky = false;
 			if (!characters.isEmpty())
 				characters.get(0).setcanmove(true);
 		}
-		if (r.nextInt() % 3 == 0) {
+		if (random.nextInt() % 3 == 0) {
 			canbepunctured = true;
 		}
 
