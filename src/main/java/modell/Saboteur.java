@@ -19,6 +19,7 @@ public class Saboteur extends Character {
 
 	/**
 	 * A szabotőr lépését megvalósító függvény.
+	 * azért üres, mert nem csinál semmit
 	 */
 	public void Step() {
 

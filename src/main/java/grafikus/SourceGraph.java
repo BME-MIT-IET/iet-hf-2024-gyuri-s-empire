@@ -45,13 +45,15 @@ public class SourceGraph implements Drawable {
         return y + 30;
     }
 
+    private Random random = new Random();
+
     /**
      * Konstruktor
      * 
      * @param jp     Ezen a panelen helyezzük el a forrást.
      * @param x      A forrás x koordinátája.
      * @param y      A forrás y koordinátája.
-     * @param forrás A kirajzolni kívánt forrás.
+     * @param source A kirajzolni kívánt forrás.
      */
     public SourceGraph(JPanel jp, int x, int y, modell.Source source) {
         playgroundpanel = jp;
@@ -101,10 +103,9 @@ public class SourceGraph implements Drawable {
      * @return A generált koordináták tömbje.
      */
     public int[] getCoord() {
-        Random rand = new Random();
         int[] m = new int[2];
-        m[0] = x + rand.nextInt(30);
-        m[1] = y + rand.nextInt(30);
+        m[0] = x + random.nextInt(30);
+        m[1] = y + random.nextInt(30);
         return m;
     }
 

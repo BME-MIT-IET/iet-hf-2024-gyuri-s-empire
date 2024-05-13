@@ -29,7 +29,7 @@ public class Window extends JFrame {
      * Konstruktor, beállítja a Window tulajdonságait és példányosítja a vezérlőket.
      */
     public Window() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(1200, 800);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
