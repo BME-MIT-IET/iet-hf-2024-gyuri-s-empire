@@ -11,7 +11,7 @@ public abstract class Character implements Steppable {
 	/**
 	 * A karakter léptetéséért felelős függvény.
 	 */
-	public abstract void Step();
+	public abstract void step();
 
 	public void setcanmove(boolean b) {
 		canmove = b;

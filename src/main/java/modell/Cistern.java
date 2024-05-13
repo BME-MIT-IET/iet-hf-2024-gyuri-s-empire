@@ -41,7 +41,7 @@ public class Cistern extends NetworkPiece implements Steppable {
 	 * és a ciszternákba jutó víz mennyiségét hozzáadja a szerelők által gyűjtött
 	 * vízhez.
 	 */
-	public void Step() {
+	public void step() {
 		for (Pipe p : pipes) {
 			if (p.GivesWater()) {
 				Network.AddCityWater();

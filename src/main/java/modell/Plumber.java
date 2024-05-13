@@ -7,7 +7,7 @@ public class Plumber extends Character {
 	/**
 	 * A vízvezetékszerelő lépését megvalósító függvény.
 	 */
-	public void Step() {
+	public void step() {
 		/*
 		 * if (canmove) {
 		 * Prototype p = new Prototype();

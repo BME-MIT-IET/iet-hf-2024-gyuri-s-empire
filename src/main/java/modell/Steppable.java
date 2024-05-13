@@ -8,5 +8,5 @@ public interface Steppable {
 	 * lépést eredményez. Ezt a metódust az interfészt megvalósító osztályok
 	 * valósítják meg.
 	 */
-	public void Step();
+	void step();
 }

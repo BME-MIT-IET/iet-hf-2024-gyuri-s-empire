@@ -99,10 +99,10 @@ public class Pump extends NetworkPiece implements Steppable {
 	 * bele víz,
 	 * ezek az információk alapján beállítja a vízfolyását, és a homokba folyt vizet
 	 */
-	public void Step() {
+	public void step() {
 
-		if (random.nextInt() % 7 == 0) {
-			// works = false;
+		if (random.nextInt() % 108 == 0) {
+			 works = false;
 		}
 
 		if (flowfrom != null)

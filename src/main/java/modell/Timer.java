@@ -26,11 +26,11 @@ public class Timer {
 	public static void Tick() {
 
 		for (Steppable value : palyaelemek) {
-			value.Step();
+			value.step();
 		}
 
 		for (Steppable karakter : karakterek) {
-			karakter.Step();
+			karakter.step();
 		}
 
 		Game.SetTimeleft(Game.GetTimeleft() - 1);
@@ -67,7 +67,7 @@ public class Timer {
 
 	public static void start() {
 		for (Steppable s : palyaelemek) {
-			s.Step();
+			s.step();
 		}
 	}
 }

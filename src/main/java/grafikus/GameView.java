@@ -10,6 +10,10 @@ import java.util.HashMap;
 import javax.swing.*;
 
 public class GameView {
+    public static final String STEPS_LEFT = " steps left";
+    public static final String S_TURN = "'s turn";
+    public static final String ERROR = "Error";
+    public static final String NEM_CSOVON_ALL = "Nem csovon all";
     /**
      * A fő panel, amelyen minden játékhoz szükséges dolog megjelenik.
      */
@@ -88,7 +92,7 @@ public class GameView {
      * 
      * @param value Az options menüben megadott játékosszám csapatonként.
      */
-    public void setPlayerCount(int value) {
+    public static void setPlayerCount(int value) {
         playercount = value;
     }
 
@@ -230,34 +234,34 @@ public class GameView {
         drawables.add(pumpGraph5);
         drawables.add(pumpGraph6);
 
-        drawables.add(new PipeGraph(playgroundpanel, sourceGraph0.GetX(), sourceGraph0.GetY(), pumpGraph0.GetX(),
-                pumpGraph0.GetY(), (Pipe) Network.getPiece("pipe0")));
-        drawables.add(new PipeGraph(playgroundpanel, sourceGraph1.GetX(), sourceGraph1.GetY(), pumpGraph1.GetX(),
-                pumpGraph1.GetY(), (Pipe) Network.getPiece("pipe1")));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph5.GetX(), pumpGraph5.GetY(), cisternGraph0.GetX(),
-                cisternGraph0.GetY(), (Pipe) Network.getPiece("pipe2")));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph6.GetX(), pumpGraph6.GetY(), cisternGraph1.GetX(),
-                cisternGraph1.GetY(), (Pipe) Network.getPiece("pipe3")));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph0.GetX(), pumpGraph0.GetY(), pumpGraph2.GetX(),
-                pumpGraph2.GetY(), new Pipe(pump0, pump2)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph2.GetX(), pumpGraph2.GetY(), pumpGraph5.GetX(),
-                pumpGraph5.GetY(), new Pipe(pump2, pump5)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph0.GetX(), pumpGraph0.GetY(), pumpGraph3.GetX(),
-                pumpGraph3.GetY(), new Pipe(pump0, pump3)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph3.GetX(), pumpGraph3.GetY(), pumpGraph5.GetX(),
-                pumpGraph5.GetY(), new Pipe(pump3, pump5)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph1.GetX(), pumpGraph1.GetY(), pumpGraph3.GetX(),
-                pumpGraph3.GetY(), new Pipe(pump1, pump3)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph3.GetX(), pumpGraph3.GetY(), pumpGraph6.GetX(),
-                pumpGraph6.GetY(), new Pipe(pump3, pump6)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph1.GetX(), pumpGraph1.GetY(), pumpGraph4.GetX(),
-                pumpGraph4.GetY(), new Pipe(pump1, pump4)));
-        drawables.add(new PipeGraph(playgroundpanel, pumpGraph4.GetX(), pumpGraph4.GetY(), pumpGraph6.GetX(),
-                pumpGraph6.GetY(), new Pipe(pump4, pump6)));
+        drawables.add(new PipeGraph(playgroundpanel, sourceGraph0.getx(), sourceGraph0.gety(), pumpGraph0.getx(),
+                pumpGraph0.gety(), (Pipe) Network.getPiece("pipe0")));
+        drawables.add(new PipeGraph(playgroundpanel, sourceGraph1.getx(), sourceGraph1.gety(), pumpGraph1.getx(),
+                pumpGraph1.gety(), (Pipe) Network.getPiece("pipe1")));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph5.getx(), pumpGraph5.gety(), cisternGraph0.getx(),
+                cisternGraph0.gety(), (Pipe) Network.getPiece("pipe2")));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph6.getx(), pumpGraph6.gety(), cisternGraph1.getx(),
+                cisternGraph1.gety(), (Pipe) Network.getPiece("pipe3")));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph0.getx(), pumpGraph0.gety(), pumpGraph2.getx(),
+                pumpGraph2.gety(), new Pipe(pump0, pump2)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph2.getx(), pumpGraph2.gety(), pumpGraph5.getx(),
+                pumpGraph5.gety(), new Pipe(pump2, pump5)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph0.getx(), pumpGraph0.gety(), pumpGraph3.getx(),
+                pumpGraph3.gety(), new Pipe(pump0, pump3)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph3.getx(), pumpGraph3.gety(), pumpGraph5.getx(),
+                pumpGraph5.gety(), new Pipe(pump3, pump5)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph1.getx(), pumpGraph1.gety(), pumpGraph3.getx(),
+                pumpGraph3.gety(), new Pipe(pump1, pump3)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph3.getx(), pumpGraph3.gety(), pumpGraph6.getx(),
+                pumpGraph6.gety(), new Pipe(pump3, pump6)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph1.getx(), pumpGraph1.gety(), pumpGraph4.getx(),
+                pumpGraph4.gety(), new Pipe(pump1, pump4)));
+        drawables.add(new PipeGraph(playgroundpanel, pumpGraph4.getx(), pumpGraph4.gety(), pumpGraph6.getx(),
+                pumpGraph6.gety(), new Pipe(pump4, pump6)));
 
-        informations.get(3).setText(String.valueOf(stepsLeft) + " steps left");
-        informations.get(2).setText(String.valueOf(modell.Game.GetTimeleft()) + " steps till the end");
-        informations.get(1).setText(character.getId() + "'s turn");
+        informations.get(3).setText(stepsLeft + STEPS_LEFT);
+        informations.get(2).setText(Game.GetTimeleft() + " steps till the end");
+        informations.get(1).setText(character.getId() + S_TURN);
         Update();
 
     }
@@ -268,7 +272,7 @@ public class GameView {
      * @param jb Az eseményt kiváltó gomb.
      */
     public void ButtonPressed(JButton jb) {
-        informations.get(1).setText(character.getId() + "'s turn");
+        informations.get(1).setText(character.getId() + S_TURN);
         gombfuggvenyek.get(jb.getText()).run();
     }
 
@@ -278,7 +282,7 @@ public class GameView {
     public void FreshTime() {
 
         informations.get(2).setText(String.valueOf(modell.Game.GetTimeleft()) + " steps till the end");
-        informations.get(3).setText(String.valueOf(stepsLeft - 1) + " steps left");
+        informations.get(3).setText(String.valueOf(stepsLeft - 1) + STEPS_LEFT);
         informations.get(4).setText("Saboteurwater: " + Network.GetSandWater());
         informations.get(5).setText("Cisternwater: " + Network.GetCityWater());
         stepsLeft = stepsLeft - 1;
@@ -295,8 +299,8 @@ public class GameView {
             playerIdex = (playerIdex + 1) % players.size();
             character = players.get(playerIdex);
 
-            informations.get(3).setText(String.valueOf(stepsLeft) + " steps left");
-            informations.get(1).setText(character.getId() + "'s turn");
+            informations.get(3).setText(String.valueOf(stepsLeft) + STEPS_LEFT);
+            informations.get(1).setText(character.getId() + S_TURN);
         }
         Update();
     }
@@ -443,7 +447,7 @@ public class GameView {
             jd.setLocationRelativeTo(null);
             jd.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Oda vagy ragadva mint a bélyeg!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Oda vagy ragadva mint a bélyeg!", ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -504,7 +508,7 @@ public class GameView {
             jd.setLocationRelativeTo(null);
             jd.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Nem pumpán áll a karakter", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nem pumpán áll a karakter", ERROR, JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -522,7 +526,7 @@ public class GameView {
                 System.out.println("nem hívható a lyukasztás");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem csovon all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, NEM_CSOVON_ALL, ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -539,7 +543,7 @@ public class GameView {
                 System.out.println("nem hívható a sikositas");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem csovon all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, NEM_CSOVON_ALL, ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -556,7 +560,7 @@ public class GameView {
                 System.out.println("nem hívható a ragacs");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem csovon all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, NEM_CSOVON_ALL, ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -573,7 +577,7 @@ public class GameView {
                 System.out.println("nem hívható a javitas");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem pumpan all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nem pumpan all", ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -590,7 +594,7 @@ public class GameView {
                 System.out.println("nem hívható a javitas");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem csovon all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, NEM_CSOVON_ALL, ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -610,7 +614,7 @@ public class GameView {
 
                 else {
                     JOptionPane.showMessageDialog(null,
-                            "Csőnek két vége nem lehet ugyanahhoz a pumpához csatlakoztatva!", "Error",
+                            "Csőnek két vége nem lehet ugyanahhoz a pumpához csatlakoztatva!", ERROR,
                             JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception ex) {
@@ -618,7 +622,7 @@ public class GameView {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Nem pumpán áll vagy túl sok cső van a pumpához csatlakoztatva!",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                    ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -652,7 +656,7 @@ public class GameView {
                         ((Plumber) character).DetachPipe(p);
                         FreshTime();
                     } else {
-                        JOptionPane.showMessageDialog(null, "A cső foglalt!", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "A cső foglalt!", ERROR, JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (Exception ex) {
 
@@ -680,7 +684,7 @@ public class GameView {
             jd.setLocationRelativeTo(null);
             jd.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Nem pumpan all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nem pumpan all", ERROR, JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -722,7 +726,7 @@ public class GameView {
                 System.out.println("nem hívható a pumpa elhelyezes");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nem csovon all", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, NEM_CSOVON_ALL, ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -735,7 +739,7 @@ public class GameView {
             ((Plumber) character).RequestPump();
             FreshTime();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Nem hívható a pumpa kérés!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nem hívható a pumpa kérés!", ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -748,7 +752,7 @@ public class GameView {
             ((Plumber) character).RequestPipe();
             FreshTime();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Nem hívható a cső kérés!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nem hívható a cső kérés!", ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 }

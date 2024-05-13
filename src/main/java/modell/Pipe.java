@@ -186,7 +186,7 @@ public class Pipe extends NetworkPiece implements Steppable {
 	 * belőle.
 	 * Ha a cső csúszós vagy ragadós, véletlenszerűen visszaállítja.
 	 */
-	public void Step() {
+	public void step() {
 
 		if (random.nextInt() % 3 == 0) {
 			isslippery = false;

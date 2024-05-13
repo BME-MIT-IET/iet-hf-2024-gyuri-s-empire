@@ -16,13 +16,9 @@ public class Saboteur extends Character {
 	public String toString() {
 		return id + "\t[stands on: " + currentpiece.getId() + "]";
 	}
-
-	/**
-	 * A szabotőr lépését megvalósító függvény.
-	 * azért üres, mert nem csinál semmit
-	 */
-	public void Step() {
-
+	
+	public void step() {
+		//A szabotőr lépését megvalósító függvény azért üres, mert nem csinál semmit
 	}
 
 	/**
