@@ -6,6 +6,7 @@ public abstract class Character implements Steppable {
 	protected NetworkPiece currentpiece;
 	protected boolean canmove = true;
 	protected String id;
+	private Random random = new Random();
 
 	/**
 	 * A karakter léptetéséért felelős függvény.
@@ -36,10 +37,8 @@ public abstract class Character implements Steppable {
 				Pipe p = (Pipe) hova;
 				if (p.IsEmpty()) {
 					if (p.Getslippery()) {
-						//TODO ez így bizony nem lesz mindig random
-						Random r = new Random();
 						currentpiece.Remove(this);
-						currentpiece = p.GetNeighbours().get(r.nextInt(2));
+						currentpiece = p.GetNeighbours().get(random.nextInt(2));
 						currentpiece.Add(this);
 					} else {
 						currentpiece.Remove(this);

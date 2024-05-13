@@ -18,14 +18,12 @@ public class Window extends JFrame {
     /**
      * A játék megjelenítését megvalósító GameView objektum.
      */
-    //TODO itt valamit kéne kezdeni a szerializálással
-    GameView game;
+    transient GameView game;
 
     /**
      * A menü megjelenítését megvalósító GameView objektum.
      */
-    //TODO itt valamit kéne kezdeni a szerializálással
-    MenuView menu;
+    transient MenuView menu;
 
     /**
      * Konstruktor, beállítja a Window tulajdonságait és példányosítja a vezérlőket.
