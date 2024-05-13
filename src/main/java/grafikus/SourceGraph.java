@@ -53,7 +53,7 @@ public class SourceGraph implements Drawable {
      * @param jp     Ezen a panelen helyezzük el a forrást.
      * @param x      A forrás x koordinátája.
      * @param y      A forrás y koordinátája.
-     * @param forrás A kirajzolni kívánt forrás.
+     * @param source A kirajzolni kívánt forrás.
      */
     public SourceGraph(JPanel jp, int x, int y, modell.Source source) {
         playgroundpanel = jp;
