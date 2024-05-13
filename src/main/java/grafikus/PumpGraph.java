@@ -33,24 +33,6 @@ public class PumpGraph implements Drawable {
     private Random random = new Random();
 
     /**
-     * Getter
-     * 
-     * @return A pumpára lépő karakter karakter leendő x koordinátáját adja meg.
-     */
-    public int GetX() {
-        return x + 30;
-    }
-
-    /**
-     * Getter
-     * 
-     * @return A pumpára lépő karakter karakter leendő y koordinátáját adja meg.
-     */
-    public int GetY() {
-        return y + 30;
-    }
-
-    /**
      * Konstruktor, beállítja a privát mezők értékét.
      * 
      * @param jp   A pumpát megjelenítő panel.

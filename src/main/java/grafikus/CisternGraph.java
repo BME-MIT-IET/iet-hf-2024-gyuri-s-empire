@@ -31,24 +31,7 @@ public class CisternGraph implements Drawable {
      * A CisternGraph y koordinátája.
      */
     private int y;
-
-    /**
-     * Getter
-     * 
-     * @return A ciszternára lépő karakter karakter leendő x koordinátáját adja meg.
-     */
-    public int GetX() {
-        return x + 30;
-    }
-
-    /**
-     * Getter
-     * 
-     * @return A ciszternára lépő karakter karakter leendő y koordinátáját adja meg.
-     */
-    public int GetY() {
-        return y + 30;
-    }
+    
 
     /**
      * Konstruktor
