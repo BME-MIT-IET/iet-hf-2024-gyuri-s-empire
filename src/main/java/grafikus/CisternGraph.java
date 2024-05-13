@@ -100,6 +100,7 @@ public class CisternGraph implements Drawable {
      * @return A generált koordináták tömbje.
      */
     public int[] getCoord() {
+        //TODO random így nem random
         Random r = new Random();
         int[] m = new int[2];
         m[0] = x + r.nextInt(30);

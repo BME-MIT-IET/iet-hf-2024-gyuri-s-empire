@@ -18,11 +18,13 @@ public class Window extends JFrame {
     /**
      * A játék megjelenítését megvalósító GameView objektum.
      */
+    //TODO itt valamit kéne kezdeni a szerializálással
     GameView game;
 
     /**
      * A menü megjelenítését megvalósító GameView objektum.
      */
+    //TODO itt valamit kéne kezdeni a szerializálással
     MenuView menu;
 
     /**

@@ -36,6 +36,7 @@ public abstract class Character implements Steppable {
 				Pipe p = (Pipe) hova;
 				if (p.IsEmpty()) {
 					if (p.Getslippery()) {
+						//TODO ez így bizony nem lesz mindig random
 						Random r = new Random();
 						currentpiece.Remove(this);
 						currentpiece = p.GetNeighbours().get(r.nextInt(2));
