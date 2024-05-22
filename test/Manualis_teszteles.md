@@ -49,8 +49,7 @@ felhasználó váltogathat, hogy éppen melyik játékost irányítja, a másik 
 mozdul. A játékidő a játék kezdete előtt beállítható, az a felhasználó nyer, aki több
 pontot gyűjtött az adott idő alatt.”
 
-- A program forráskódja és dokumentációja rendelkezésre áll, így a teszteléshez fehér
-doboz technika alkalmazható.
+- A program tesztelését fekete doboz technikával fogjuk elvégezni.
 - A forrásfájlok áttekintése után jól elkülöníthető egy megjelenítési és egy logikai réteg.
 - Indítás után egy egyszerű menü jelenik meg, ahol három lehetőség közül lehet
 választani:
